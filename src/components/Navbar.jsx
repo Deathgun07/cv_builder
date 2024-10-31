@@ -10,7 +10,7 @@ const Navbar = () => {
             <Link to="/" className="text-white hover:text-blue-200">Accueil</Link>
           </li>
           <li>
-            <Link to="/build-cv" className="text-white hover:text-blue-200">Créer un CV</Link>
+            <Link to="/select-template" className="text-white hover:text-blue-200">Créer un CV</Link>
           </li>
           <li>
             <Link to="/select-template" className="text-white hover:text-blue-200">Modèles</Link>
