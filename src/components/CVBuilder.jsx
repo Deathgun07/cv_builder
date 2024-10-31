@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import CVForm from './CVForm'
-import CVPreview from './CVPreview'
-import PDFGenerator from './PDFGenerator'
+import { useState } from 'react';
+import CVForm from './CVForm';
+import CVPreview from './CVPreview';
+import { useParams } from 'react-router-dom';
 
 const CVBuilder = () => {
   const [cvData, setCVData] = useState({
@@ -12,23 +12,23 @@ const CVBuilder = () => {
       address: '',
     },
     profile: '',
-    desiredPosition: '',
     experiences: [],
     education: [],
     skills: [],
     languages: [],
     hobbies: '',
-  })
-
-  const [selectedTemplate, setSelectedTemplate] = useState('classic')
+  });
+  let temp = useParams();
+  
+  const [selectedTemplate, setSelectedTemplate] = useState(temp.templateId);
 
   const updateCVData = (newData) => {
-    setCVData(newData)
-  }
+    setCVData(newData);
+  };
 
   const changeTemplate = (newTemplate) => {
-    setSelectedTemplate(newTemplate)
-  }
+    setSelectedTemplate(newTemplate);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -40,13 +40,13 @@ const CVBuilder = () => {
           selectedTemplate={selectedTemplate}
           changeTemplate={changeTemplate}
         />
-        <div>
-          <CVPreview cvData={cvData} selectedTemplate={selectedTemplate} />
-          <PDFGenerator cvData={cvData} selectedTemplate={selectedTemplate} />
-        </div>
+        <CVPreview
+          cvData={cvData}
+          selectedTemplate={selectedTemplate}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CVBuilder
+export default CVBuilder;

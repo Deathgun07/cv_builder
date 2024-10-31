@@ -1,44 +1,30 @@
-import React from 'react'
-
-// Component for CV input form
 const CVForm = ({ cvData, updateCVData, selectedTemplate, changeTemplate }) => {
-  // Function to update a specific field in the CV data
   const updateField = (section, field, value) => {
-    const newData = { ...cvData }
+    const newData = { ...cvData };
     if (section) {
-      newData[section][field] = value
+      newData[section][field] = value;
     } else {
-      newData[field] = value
+      newData[field] = value;
     }
-    updateCVData(newData)
-  }
+    updateCVData(newData);
+  };
 
-  // Function to add a new experience
-  const addExperience = () => {
-    const newData = { ...cvData }
-    newData.experiences.push({ position: '', company: '', duration: '', description: '' })
-    updateCVData(newData)
-  }
+  const addItem = (section, item) => {
+    const newData = { ...cvData };
+    newData[section].push(item);
+    updateCVData(newData);
+  };
 
-  // Function to add a new education
-  const addEducation = () => {
-    const newData = { ...cvData }
-    newData.education.push({ degree: '', school: '', year: '' })
-    updateCVData(newData)
-  }
-
-  // Function to add a new skill
-  const addSkill = () => {
-    const newData = { ...cvData }
-    newData.skills.push({ name: '', level: '50' })
-    updateCVData(newData)
-  }
+  const removeItem = (section, index) => {
+    const newData = { ...cvData };
+    newData[section].splice(index, 1);
+    updateCVData(newData);
+  };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4">Informations du CV</h2>
 
-      {/* Template selection */}
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="template">
           Modèle de CV
@@ -49,16 +35,15 @@ const CVForm = ({ cvData, updateCVData, selectedTemplate, changeTemplate }) => {
           value={selectedTemplate}
           onChange={(e) => changeTemplate(e.target.value)}
         >
-          <option value="classic">Classique</option>
-          <option value="modern">Moderne</option>
-          <option value="tech">Tech</option>
-          <option value="executive">Exécutif</option>
-          <option value="beginner">Débutant</option>
-          <option value="versatile">Polyvalent</option>
+          <option value="template1">Classique Élégant</option>
+          <option value="template2">Moderne Créatif</option>
+          <option value="template3">Tech Innovant</option>
+          <option value="template4">Exécutif Sophistiqué</option>
+          <option value="template5">Frais Débutant</option>
+          <option value="template6">Polyvalent Professionnel</option>
         </select>
       </div>
 
-      {/* Personal information */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold mb-2">Informations personnelles</h3>
         <input
@@ -91,7 +76,6 @@ const CVForm = ({ cvData, updateCVData, selectedTemplate, changeTemplate }) => {
         />
       </div>
 
-      {/* Profile */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold mb-2">Profil</h3>
         <textarea
@@ -99,24 +83,11 @@ const CVForm = ({ cvData, updateCVData, selectedTemplate, changeTemplate }) => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={cvData.profile}
           onChange={(e) => updateField(null, 'profile', e.target.value)}
-        ></textarea>
-      </div>
-
-      {/* Desired position */}
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold mb-2">Poste recherché</h3>
-        <input
-          type="text"
-          placeholder="Poste recherché"
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          value={cvData.desiredPosition}
-          onChange={(e) => updateField(null, 'desiredPosition', e.target.value)}
         />
       </div>
 
-      {/* Experiences */}
       <div className="mb-4">
-        <h3 className="text-xl font-semibold mb-2">Expériences</h3>
+        <h3 className="text-xl font-semibold mb-2">Expériences professionnelles</h3>
         {cvData.experiences.map((exp, index) => (
           <div key={index} className="mb-2">
             <input
@@ -145,18 +116,23 @@ const CVForm = ({ cvData, updateCVData, selectedTemplate, changeTemplate }) => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
               value={exp.description}
               onChange={(e) => updateField('experiences', index, { ...exp, description: e.target.value })}
-            ></textarea>
+            />
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => removeItem('experiences', index)}
+            >
+              Supprimer
+            </button>
           </div>
         ))}
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={addExperience}
+          onClick={() => addItem('experiences', { position: '', company: '', duration: '', description: '' })}
         >
           Ajouter une expérience
         </button>
       </div>
 
-      {/* Education */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold mb-2">Formation</h3>
         {cvData.education.map((edu, index) => (
@@ -182,17 +158,22 @@ const CVForm = ({ cvData, updateCVData, selectedTemplate, changeTemplate }) => {
               value={edu.year}
               onChange={(e) => updateField('education', index, { ...edu, year: e.target.value })}
             />
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => removeItem('education', index)}
+            >
+              Supprimer
+            </button>
           </div>
         ))}
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={addEducation}
+          onClick={() => addItem('education', { degree: '', school: '', year: '' })}
         >
           Ajouter une formation
         </button>
       </div>
 
-      {/* Skills */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold mb-2">Compétences</h3>
         {cvData.skills.map((skill, index) => (
@@ -212,46 +193,56 @@ const CVForm = ({ cvData, updateCVData, selectedTemplate, changeTemplate }) => {
               value={skill.level}
               onChange={(e) => updateField('skills', index, { ...skill, level: e.target.value })}
             />
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => removeItem('skills', index)}
+            >
+              Supprimer
+            </button>
           </div>
         ))}
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={addSkill}
+          onClick={() => addItem('skills', { name: '', level: 50 })}
         >
           Ajouter une compétence
         </button>
       </div>
 
-      {/* Languages */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold mb-2">Langues</h3>
-        {cvData.languages.map((language, index) => (
+        {cvData.languages.map((lang, index) => (
           <div key={index} className="mb-2">
             <input
               type="text"
               placeholder="Langue"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-              value={language.name}
-              onChange={(e) => updateField('languages', index, { ...language, name: e.target.value })}
+              value={lang.name}
+              onChange={(e) => updateField('languages', index, { ...lang, name: e.target.value })}
             />
             <input
               type="text"
               placeholder="Niveau"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-              value={language.level}
-              onChange={(e) => updateField('languages', index, { ...language, level: e.target.value })}
+              value={lang.level}
+              onChange={(e) => updateField('languages', index, { ...lang, level: e.target.value })}
             />
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => removeItem('languages', index)}
+            >
+              Supprimer
+            </button>
           </div>
         ))}
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={() => updateField('languages', cvData.languages.length, { name: '', level: '' })}
+          onClick={() => addItem('languages', { name: '', level: '' })}
         >
           Ajouter une langue
         </button>
       </div>
 
-      {/* Hobbies */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold mb-2">Loisirs</h3>
         <textarea
@@ -259,10 +250,10 @@ const CVForm = ({ cvData, updateCVData, selectedTemplate, changeTemplate }) => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={cvData.hobbies}
           onChange={(e) => updateField(null, 'hobbies', e.target.value)}
-        ></textarea>
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CVForm
+export default CVForm;
