@@ -4,28 +4,32 @@ import CVPreview from './CVPreview';
 import { useParams } from 'react-router-dom';
 
 const CVBuilder = () => {
+  // État initial du CV
   const [cvData, setCVData] = useState({
     personalInfo: {
       name: '',
       email: '',
       phone: '',
       address: '',
+      title: '',
     },
-    profile: '',
     experiences: [],
     education: [],
     skills: [],
     languages: [],
     hobbies: '',
   });
-  let temp = useParams();
-  
-  const [selectedTemplate, setSelectedTemplate] = useState(temp.templateId);
 
+  // État pour le modèle sélectionné
+  let temp = useParams()
+  const [selectedTemplate, setSelectedTemplate] = useState(temp.name);
+
+  // Fonction pour mettre à jour les données du CV
   const updateCVData = (newData) => {
     setCVData(newData);
   };
 
+  // Fonction pour changer le modèle sélectionné
   const changeTemplate = (newTemplate) => {
     setSelectedTemplate(newTemplate);
   };

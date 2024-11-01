@@ -1,57 +1,84 @@
+import React from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import {
-  ClassiqueElegant,
-  ModerneCreatif,
+  ModerneProfessionnel,
+  CreatifColore,
+  MinimalisteElegant,
   TechInnovant,
-  ExecutifSophistique,
-  FraisDebutant,
-  PolyvalentProfessionnel
+  ClassiqueRaffine,
+  ModerneEpure,
+  CreatifAudacieux,
+  NaturelOrganique,
+  UrbanChic,
+  ArtistiqueCreatif
 } from './cv-templates';
 import {
-  ClassiqueElegantPDF,
-  ModerneCreatifPDF,
+  ModerneProfessionnelPDF,
+  CreatifColorePDF,
+  MinimalisteElegantPDF,
   TechInnovantPDF,
-  ExecutifSophistiquePDF,
-  FraisDebutantPDF,
-  PolyvalentProfessionnelPDF
+  ClassiqueRaffinePDF,
+  ModerneEpurePDF,
+  CreatifAudacieuxPDF,
+  NaturelOrganiquePDF,
+  UrbanChicPDF,
+  ArtistiqueCreatifPDF
 } from './CVPDFTemplates';
 
 const CVPreview = ({ cvData, selectedTemplate }) => {
+  // Fonction pour rendre le modèle de CV approprié
   const renderTemplate = () => {
     switch (selectedTemplate) {
-      case 'template1':
-        return <ClassiqueElegant cvData={cvData} />;
-      case 'template2':
-        return <ModerneCreatif cvData={cvData} />;
-      case 'template3':
+      case 'ModerneProfessionnel':
+        return <ModerneProfessionnel cvData={cvData} />;
+      case 'CreatifColore':
+        return <CreatifColore cvData={cvData} />;
+      case 'MinimalisteElegant':
+        return <MinimalisteElegant cvData={cvData} />;
+      case 'TechInnovant':
         return <TechInnovant cvData={cvData} />;
-      case 'template4':
-        return <ExecutifSophistique cvData={cvData} />;
-      case 'template5':
-        return <FraisDebutant cvData={cvData} />;
-      case 'template6':
-        return <PolyvalentProfessionnel cvData={cvData} />;
+      case 'ClassiqueRaffine':
+        return <ClassiqueRaffine cvData={cvData} />;
+      case 'ModerneEpure':
+        return <ModerneEpure cvData={cvData} />;
+      case 'CreatifAudacieux':
+        return <CreatifAudacieux cvData={cvData} />;
+      case 'NaturelOrganique':
+        return <NaturelOrganique cvData={cvData} />;
+      case 'UrbanChic':
+        return <UrbanChic cvData={cvData} />;
+      case 'ArtistiqueCreatif':
+        return <ArtistiqueCreatif cvData={cvData} />;
       default:
-        return <ClassiqueElegant cvData={cvData} />;
+        return <ModerneProfessionnel cvData={cvData} />;
     }
   };
 
-  const renderPDFTemplate = () => {
+  // Fonction pour obtenir le composant PDF approprié
+  const getPDFComponent = () => {
     switch (selectedTemplate) {
-      case 'template1':
-        return <ClassiqueElegantPDF cvData={cvData} />;
-      case 'template2':
-        return <ModerneCreatifPDF cvData={cvData} />;
-      case 'template3':
-        return <TechInnovantPDF cvData={cvData} />;
-      case 'template4':
-        return <ExecutifSophistiquePDF cvData={cvData} />;
-      case 'template5':
-        return <FraisDebutantPDF cvData={cvData} />;
-      case 'template6':
-        return <PolyvalentProfessionnelPDF cvData={cvData} />;
+      case 'ModerneProfessionnel':
+        return ModerneProfessionnelPDF;
+      case 'CreatifColore':
+        return CreatifColorePDF;
+      case 'MinimalisteElegant':
+        return MinimalisteElegantPDF;
+      case 'TechInnovant':
+        return TechInnovantPDF;
+      case 'ClassiqueRaffine':
+        return ClassiqueRaffinePDF;
+      case 'ModerneEpure':
+        return ModerneEpurePDF;
+      case 'CreatifAudacieux':
+        return CreatifAudacieuxPDF;
+      case 'NaturelOrganique':
+        return NaturelOrganiquePDF;
+      case 'UrbanChic':
+        return UrbanChicPDF;
+      case 'ArtistiqueCreatif':
+        return ArtistiqueCreatifPDF;
       default:
-        return <ClassiqueElegantPDF cvData={cvData} />;
+        return ModerneProfessionnelPDF;
     }
   };
 
@@ -64,12 +91,12 @@ const CVPreview = ({ cvData, selectedTemplate }) => {
         </div>
         <div className="mt-4 text-center">
           <PDFDownloadLink
-            document={renderPDFTemplate()}
+            document={React.createElement(getPDFComponent(), { cvData })}
             fileName="mon_cv.pdf"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             {({ blob, url, loading, error }) =>
-              loading ? 'Chargement du PDF...' : 'Télécharger en PDF'
+              loading ? 'Chargement du document...' : 'Télécharger le CV en PDF'
             }
           </PDFDownloadLink>
         </div>
